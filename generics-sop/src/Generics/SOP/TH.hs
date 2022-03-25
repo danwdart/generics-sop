@@ -475,7 +475,7 @@ npE (e:es) = [| $e :* $(npE es) |]
 -- Construct a POP.
 popE :: [Q [Q Exp]] -> Q Exp
 popE ess =
-  [| POP $(npE (map ((npE =<<)) ess)) |]
+  [| POP $(npE (map (npE =<<) ess)) |]
 
 -- Like npE, but construct a pattern instead
 npP :: [Q Pat] -> Q Pat
@@ -503,7 +503,7 @@ promotedTypeList (t:ts) = [t| $promotedConsT $t $(promotedTypeList ts) |]
 
 promotedTypeListOfList :: [Q [Q Type]] -> Q Type
 promotedTypeListOfList =
-  promotedTypeList . map ((promotedTypeList =<<))
+  promotedTypeList . map (promotedTypeList =<<)
 
 promotedTypeListSubst :: (Name -> Q Type) -> [Q Type] -> Q Type
 promotedTypeListSubst _ []     = promotedNilT

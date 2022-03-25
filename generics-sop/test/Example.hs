@@ -11,10 +11,10 @@
 {-# OPTIONS_GHC -fno-warn-deprecations #-}
 module Main (main, toTreeC, toDataFamC) where
 
-import qualified GHC.Generics               as GHC
 import           Generics.SOP
 import           Generics.SOP.TH
 import qualified Generics.SOP.Type.Metadata as T
+import qualified GHC.Generics               as GHC
 
 import           HTransExample
 

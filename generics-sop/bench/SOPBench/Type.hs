@@ -8,9 +8,9 @@
 module SOPBench.Type where
 
 import           Control.DeepSeq
-import qualified GHC.Generics        as GHC
 import qualified Generics.SOP        as SOP
 import           Generics.SOP.TH
+import qualified GHC.Generics        as GHC
 import           Language.Haskell.TH
 
 import qualified SOPBench.Eq         as SOP

@@ -23,12 +23,12 @@ module Generics.SOP.GGP
 
 import           Data.Kind                  (Type)
 import           Data.Proxy                 (Proxy (..))
-import           GHC.Generics               as GHC
 import           Generics.SOP.BasicFunctors as SOP
 import           Generics.SOP.Metadata      as SOP
 import           Generics.SOP.NP            as SOP
 import           Generics.SOP.NS            as SOP
 import qualified Generics.SOP.Type.Metadata as SOP.T
+import           GHC.Generics               as GHC
 
 type family ToSingleCode (a :: Type -> Type) :: Type
 type instance ToSingleCode (K1 _i a) = a
@@ -123,7 +123,7 @@ class GSingleTo (a :: Type -> Type) where
   gSingleTo :: ToSingleCode a -> a x
 
 instance GSingleTo (K1 i a) where
-  gSingleTo a = K1 a
+  gSingleTo = K1
 
 class GProductTo (a :: Type -> Type) where
   gProductTo :: NP I (ToProductCode a xs) -> (a x -> NP I xs -> r) -> r
@@ -156,8 +156,8 @@ instance (GSumFrom a, GSumFrom b) => GSumFrom (a :+: b) where
   gSumSkip _ xss = gSumSkip (Proxy :: Proxy a) (gSumSkip (Proxy :: Proxy b) xss)
 
 instance (GSumFrom a) => GSumFrom (M1 D c a) where
-  gSumFrom (M1 a) xss = gSumFrom a xss
-  gSumSkip _      xss = gSumSkip (Proxy :: Proxy a) xss
+  gSumFrom (M1 a) = gSumFrom a
+  gSumSkip _ = gSumSkip (Proxy :: Proxy a)
 
 instance (GProductFrom a) => GSumFrom (M1 C c a) where
   gSumFrom (M1 a) _    = SOP (Z (gProductFrom a Nil))
@@ -177,7 +177,7 @@ instance (GProductTo a) => GSumTo (M1 C c a) where
   gSumTo (SOP (S xs)) _ k = k (SOP xs)
 
 instance (GSumTo a) => GSumTo (M1 D c a) where
-  gSumTo xss s k = gSumTo xss (s . M1) k
+  gSumTo xss s = gSumTo xss (s . M1)
 
 -- | Compute the SOP code of a datatype.
 --

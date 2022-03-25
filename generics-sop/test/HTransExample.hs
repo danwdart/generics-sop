@@ -1,10 +1,10 @@
-{-# LANGUAGE DataKinds              #-}
-{-# LANGUAGE DefaultSignatures      #-}
-{-# LANGUAGE FlexibleContexts       #-}
-{-# LANGUAGE FlexibleInstances      #-}
-{-# LANGUAGE FunctionalDependencies #-}
+{-# LANGUAGE DataKinds         #-}
+{-# LANGUAGE DefaultSignatures #-}
+{-# LANGUAGE FlexibleContexts  #-}
+{-# LANGUAGE FlexibleInstances #-}
 
-{-# LANGUAGE TypeFamilies           #-}
+
+{-# LANGUAGE TypeFamilies      #-}
 module HTransExample where
 
 import           Generics.SOP
