@@ -1,8 +1,9 @@
-{-# LANGUAGE PolyKinds, StandaloneDeriving #-}
+{-# LANGUAGE PolyKinds          #-}
+{-# LANGUAGE StandaloneDeriving #-}
 #if __GLASGOW_HASKELL__ < 806
 -- Before GHC 8.6, TypeInType was required to explicitly quantify kind variables.
 -- After GHC 8.6, this feature was incorporated into PolyKinds.
-{-# LANGUAGE TypeInType #-}
+{-# LANGUAGE TypeInType         #-}
 #endif
 -- | Singleton types corresponding to type-level data structures.
 --
@@ -24,10 +25,10 @@ module Data.SOP.Sing
   , lengthSList
   ) where
 
-import Data.Kind (Type)
-import Data.Proxy (Proxy(..))
+import           Data.Kind           (Type)
+import           Data.Proxy          (Proxy (..))
 
-import Data.SOP.Constraint
+import           Data.SOP.Constraint
 
 -- * Singletons
 

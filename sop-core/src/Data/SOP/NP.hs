@@ -1,4 +1,6 @@
-{-# LANGUAGE PolyKinds, StandaloneDeriving, UndecidableInstances #-}
+{-# LANGUAGE PolyKinds            #-}
+{-# LANGUAGE StandaloneDeriving   #-}
+{-# LANGUAGE UndecidableInstances #-}
 -- | n-ary products (and products of products)
 module Data.SOP.NP
   ( -- * Datatypes
@@ -87,20 +89,20 @@ module Data.SOP.NP
   , toI_POP
   ) where
 
-import Data.Coerce
-import Data.Kind (Type)
-import Data.Proxy (Proxy(..))
-import Unsafe.Coerce
+import           Data.Coerce
+import           Data.Kind              (Type)
+import           Data.Proxy             (Proxy (..))
+import           Unsafe.Coerce
 #if !MIN_VERSION_base(4,11,0)
-import Data.Semigroup (Semigroup (..))
+import           Data.Semigroup         (Semigroup (..))
 #endif
 
-import Control.DeepSeq (NFData(..))
+import           Control.DeepSeq        (NFData (..))
 
-import Data.SOP.BasicFunctors
-import Data.SOP.Classes
-import Data.SOP.Constraint
-import Data.SOP.Sing
+import           Data.SOP.BasicFunctors
+import           Data.SOP.Classes
+import           Data.SOP.Constraint
+import           Data.SOP.Sing
 
 -- | An n-ary product.
 --
@@ -250,8 +252,8 @@ topP = Proxy
 cpure_NP :: forall c xs proxy f. All c xs
          => proxy c -> (forall a. c a => f a) -> NP f xs
 cpure_NP p f = case sList :: SList xs of
-  SNil   -> Nil
-  SCons  -> f :* cpure_NP p f
+  SNil  -> Nil
+  SCons -> f :* cpure_NP p f
 
 -- | Specialization of 'hcpure'.
 --
@@ -296,8 +298,8 @@ fromList = go sList
 -- suitable arguments.
 --
 ap_NP :: NP (f -.-> g) xs -> NP f xs -> NP g xs
-ap_NP Nil           Nil        = Nil
-ap_NP (Fn f :* fs)  (x :* xs)  = f x :* ap_NP fs xs
+ap_NP Nil           Nil       = Nil
+ap_NP (Fn f :* fs)  (x :* xs) = f x :* ap_NP fs xs
 
 -- | Specialization of 'hap'.
 --

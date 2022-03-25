@@ -1,8 +1,8 @@
 {-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE MonoLocalBinds #-}
+{-# LANGUAGE MonoLocalBinds   #-}
 module SOPBench.Eq where
 
-import Generics.SOP
+import           Generics.SOP
 
 geq :: (Generic a, All2 Eq (Code a)) => a -> a -> Bool
 geq x y =

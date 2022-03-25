@@ -1,19 +1,19 @@
-{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE UndecidableInstances    #-}
 {-# LANGUAGE UndecidableSuperClasses #-}
 -- | Codes and interpretations
 module Generics.SOP.Universe where
 
-import Data.Kind (Type)
-import Data.Coerce (Coercible, coerce)
-import Data.Proxy
-import qualified GHC.Generics as GHC
+import           Data.Coerce                (Coercible, coerce)
+import           Data.Kind                  (Type)
+import           Data.Proxy
+import qualified GHC.Generics               as GHC
 
-import Generics.SOP.BasicFunctors
-import Generics.SOP.Constraint
-import Generics.SOP.NP
-import Generics.SOP.NS
-import Generics.SOP.GGP
-import Generics.SOP.Metadata
+import           Generics.SOP.BasicFunctors
+import           Generics.SOP.Constraint
+import           Generics.SOP.GGP
+import           Generics.SOP.Metadata
+import           Generics.SOP.NP
+import           Generics.SOP.NS
 import qualified Generics.SOP.Type.Metadata as T
 
 -- | The (generic) representation of a datatype.

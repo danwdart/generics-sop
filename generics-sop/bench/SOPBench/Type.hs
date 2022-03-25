@@ -1,21 +1,21 @@
-{-# LANGUAGE DataKinds #-}
-{-# LANGUAGE DeriveGeneric #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE KindSignatures #-}
+{-# LANGUAGE DataKinds          #-}
+{-# LANGUAGE DeriveGeneric      #-}
+{-# LANGUAGE FlexibleInstances  #-}
+
 {-# LANGUAGE StandaloneDeriving #-}
-{-# LANGUAGE TemplateHaskell #-}
-{-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE TemplateHaskell    #-}
+{-# LANGUAGE TypeFamilies       #-}
 module SOPBench.Type where
 
-import Control.DeepSeq
-import qualified Generics.SOP as SOP
-import Generics.SOP.TH
-import qualified GHC.Generics as GHC
-import Language.Haskell.TH
+import           Control.DeepSeq
+import qualified GHC.Generics        as GHC
+import qualified Generics.SOP        as SOP
+import           Generics.SOP.TH
+import           Language.Haskell.TH
 
-import qualified SOPBench.Eq as SOP
-import qualified SOPBench.Show as SOP
-import SOPBench.Roundtrip
+import qualified SOPBench.Eq         as SOP
+import           SOPBench.Roundtrip
+import qualified SOPBench.Show       as SOP
 
 data S2 (tag :: Mode) =
     S2_0

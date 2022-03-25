@@ -1,4 +1,5 @@
-{-# LANGUAGE PolyKinds, UndecidableInstances #-}
+{-# LANGUAGE PolyKinds            #-}
+{-# LANGUAGE UndecidableInstances #-}
 {-# OPTIONS_GHC -fno-warn-unused-binds #-}
 -- | Main module of @generics-sop@
 --
@@ -394,17 +395,17 @@ module Generics.SOP (
 #endif
   ) where
 
-import Data.Proxy (Proxy(..))
+import           Data.Proxy                 (Proxy (..))
 
-import Generics.SOP.BasicFunctors
-import Generics.SOP.Classes
-import Generics.SOP.Constraint
-import Generics.SOP.Instances ()
-import Generics.SOP.Metadata
-import Generics.SOP.NP
-import Generics.SOP.NS
-import Generics.SOP.Universe
-import Generics.SOP.Sing
+import           Generics.SOP.BasicFunctors
+import           Generics.SOP.Classes
+import           Generics.SOP.Constraint
+import           Generics.SOP.Instances     ()
+import           Generics.SOP.Metadata
+import           Generics.SOP.NP
+import           Generics.SOP.NS
+import           Generics.SOP.Sing
+import           Generics.SOP.Universe
 
 -- $setup
 --

@@ -1,4 +1,5 @@
-{-# LANGUAGE PolyKinds, UndecidableInstances #-}
+{-# LANGUAGE PolyKinds               #-}
+{-# LANGUAGE UndecidableInstances    #-}
 {-# LANGUAGE UndecidableSuperClasses #-}
 {-# OPTIONS_GHC -fno-warn-orphans -fno-warn-deprecations #-}
 -- | Constraints for indexed datatypes.
@@ -12,8 +13,8 @@ module Data.SOP.Constraint
   , Constraint
   ) where
 
-import Data.Coerce
-import Data.Kind (Type, Constraint)
+import           Data.Coerce
+import           Data.Kind   (Constraint, Type)
 
 -- import Data.SOP.Sing
 

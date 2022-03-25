@@ -1,4 +1,4 @@
-{-# LANGUAGE EmptyCase #-}
+{-# LANGUAGE EmptyCase       #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-# OPTIONS_GHC -freduction-depth=100 #-}
@@ -24,52 +24,52 @@ module Generics.SOP.Instances () where
 -- 8.4.3:  4.11.1.0
 -- 8.6.1:  4.12.0.0
 
-import Control.Exception
-import Data.Char
-import Data.Complex
-import Data.Data
-import Data.Fixed
-import Data.Functor.Compose -- new
-import qualified Data.Functor.Const -- new
-import Data.Functor.Identity -- new
-import Data.Functor.Product -- new
-import Data.Functor.Sum -- new
-import Data.List.NonEmpty -- new
+import           Control.Exception
+import           Data.Char
+import           Data.Complex
+import           Data.Data
+import           Data.Fixed
+import           Data.Functor.Compose
+import qualified Data.Functor.Const
+import           Data.Functor.Identity
+import           Data.Functor.Product
+import           Data.Functor.Sum
+import           Data.List.NonEmpty
 import qualified Data.Monoid
-import Data.Ord
-import qualified Data.Semigroup -- new
-import Data.Version
-import Data.Void -- new
-import Foreign.C.Error
-import Foreign.C.Types
+import           Data.Ord
+import qualified Data.Semigroup
+import           Data.Version
+import           Data.Void
+import           Foreign.C.Error
+import           Foreign.C.Types
 #if MIN_VERSION_base(4,11,0)
-import GHC.ByteOrder -- new
+import           GHC.ByteOrder
 #endif
-import GHC.Conc -- new
-import GHC.ExecutionStack -- new
-import GHC.Exts -- new
+import           GHC.Conc
+import           GHC.ExecutionStack
+import           GHC.Exts
 -- import GHC.Events -- platform-specific, omitted
-import GHC.Fingerprint -- new
-import GHC.Float -- new
-import qualified GHC.Generics -- new
-import GHC.IO.Buffer -- new
-import GHC.IO.Device -- new
-import GHC.IO.Encoding -- new
-import GHC.IO.Encoding.Failure -- new
-import GHC.IO.Exception -- new
-import GHC.IO.Handle -- new
-import GHC.RTS.Flags -- new
-import qualified GHC.Stack -- new
-import GHC.StaticPtr -- new
-import GHC.Stats -- new
-import System.Console.GetOpt
-import System.IO
-import Text.Printf
-import Text.Read.Lex
+import           GHC.Fingerprint
+import           GHC.Float
+import qualified GHC.Generics
+import           GHC.IO.Buffer
+import           GHC.IO.Device
+import           GHC.IO.Encoding
+import           GHC.IO.Encoding.Failure
+import           GHC.IO.Exception
+import           GHC.IO.Handle
+import           GHC.RTS.Flags
+import qualified GHC.Stack
+import           GHC.StaticPtr
+import           GHC.Stats
+import           System.Console.GetOpt
+import           System.IO
+import           Text.Printf
+import           Text.Read.Lex
 
-import Generics.SOP.BasicFunctors
-import Generics.SOP.Classes
-import Generics.SOP.TH
+import           Generics.SOP.BasicFunctors
+import           Generics.SOP.Classes
+import           Generics.SOP.TH
 
 -- Types from Generics.SOP:
 

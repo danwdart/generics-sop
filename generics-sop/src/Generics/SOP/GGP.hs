@@ -1,4 +1,6 @@
-{-# LANGUAGE EmptyCase, PolyKinds, UndecidableInstances #-}
+{-# LANGUAGE EmptyCase            #-}
+{-# LANGUAGE PolyKinds            #-}
+{-# LANGUAGE UndecidableInstances #-}
 {-# OPTIONS_GHC -fno-warn-unticked-promoted-constructors #-}
 -- | Derive @generics-sop@ boilerplate instances from GHC's 'GHC.Generic'.
 --
@@ -19,14 +21,14 @@ module Generics.SOP.GGP
   , gdatatypeInfo
   ) where
 
-import Data.Proxy (Proxy (..))
-import Data.Kind (Type)
-import GHC.Generics as GHC
-import Generics.SOP.NP as SOP
-import Generics.SOP.NS as SOP
-import Generics.SOP.BasicFunctors as SOP
+import           Data.Kind                  (Type)
+import           Data.Proxy                 (Proxy (..))
+import           GHC.Generics               as GHC
+import           Generics.SOP.BasicFunctors as SOP
+import           Generics.SOP.Metadata      as SOP
+import           Generics.SOP.NP            as SOP
+import           Generics.SOP.NS            as SOP
 import qualified Generics.SOP.Type.Metadata as SOP.T
-import Generics.SOP.Metadata as SOP
 
 type family ToSingleCode (a :: Type -> Type) :: Type
 type instance ToSingleCode (K1 _i a) = a

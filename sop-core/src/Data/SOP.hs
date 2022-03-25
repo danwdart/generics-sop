@@ -1,4 +1,5 @@
-{-# LANGUAGE PolyKinds, UndecidableInstances #-}
+{-# LANGUAGE PolyKinds            #-}
+{-# LANGUAGE UndecidableInstances #-}
 {-# OPTIONS_GHC -fno-warn-unused-binds #-}
 -- | Main module of @sop-core@
 module Data.SOP (
@@ -140,12 +141,12 @@ module Data.SOP (
 #endif
   ) where
 
-import Data.Proxy (Proxy(..))
+import           Data.Proxy             (Proxy (..))
 
-import Data.SOP.BasicFunctors
-import Data.SOP.Classes
-import Data.SOP.Constraint
-import Data.SOP.NP
-import Data.SOP.NS
-import Data.SOP.Sing
+import           Data.SOP.BasicFunctors
+import           Data.SOP.Classes
+import           Data.SOP.Constraint
+import           Data.SOP.NP
+import           Data.SOP.NS
+import           Data.SOP.Sing
 

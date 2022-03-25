@@ -1,22 +1,22 @@
-{-# LANGUAGE DeriveGeneric #-}
-{-# LANGUAGE EmptyCase #-}
+{-# LANGUAGE ConstraintKinds   #-}
+{-# LANGUAGE DataKinds         #-}
+{-# LANGUAGE DeriveGeneric     #-}
+{-# LANGUAGE EmptyCase         #-}
+{-# LANGUAGE FlexibleContexts  #-}
 {-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE TemplateHaskell #-}
-{-# LANGUAGE ConstraintKinds #-}
-{-# LANGUAGE GADTs #-}
-{-# LANGUAGE DataKinds #-}
-{-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE PolyKinds #-}
+{-# LANGUAGE GADTs             #-}
+{-# LANGUAGE PolyKinds         #-}
+{-# LANGUAGE TemplateHaskell   #-}
+{-# LANGUAGE TypeFamilies      #-}
 {-# OPTIONS_GHC -fno-warn-deprecations #-}
 module Main (main, toTreeC, toDataFamC) where
 
-import qualified GHC.Generics as GHC
-import Generics.SOP
-import Generics.SOP.TH
+import qualified GHC.Generics               as GHC
+import           Generics.SOP
+import           Generics.SOP.TH
 import qualified Generics.SOP.Type.Metadata as T
 
-import HTransExample
+import           HTransExample
 
 -- Generic show, kind of
 gshow :: (Generic a, All2 Show (Code a)) => a -> String
@@ -28,7 +28,7 @@ gshowS (SOP (S xss)) = gshowS (SOP xss)
 
 gshowP :: (All Show xs) => NP I xs -> String
 gshowP Nil         = ""
-gshowP (I x :* xs) = show x ++ (gshowP xs)
+gshowP (I x :* xs) = show x ++ gshowP xs
 
 -- Generic enum, kind of
 class Enumerable a where
@@ -40,8 +40,8 @@ genum =
 
 genumS :: (All SListI xss, All2 Enumerable xss) => [SOP I xss]
 genumS =
-  concat (fmap apInjs_POP
-    (hsequence (hcpure (Proxy :: Proxy Enumerable) enum)))
+  concatMap apInjs_POP
+    (hsequence (hcpure (Proxy :: Proxy Enumerable) enum))
 
 -- GHC.Generics
 data Tree = Leaf Int | Node Tree Tree
@@ -212,24 +212,24 @@ main = do
   print tree
   print abc
   print dataFam
-  print $ (enum :: [ABC])
-  print $ (enum :: [Void])
+  print (enum :: [ABC])
+  print (enum :: [Void])
   print $ datatypeInfo (Proxy :: Proxy Tree)
   print $ datatypeInfo (Proxy :: Proxy Void)
   print $ datatypeInfo (Proxy :: Proxy (DataFam Int (Maybe Int) Int))
   print treeB
   print abcB
   print dataFamB
-  print $ (enum :: [ABCB])
-  print $ (enum :: [VoidB])
+  print (enum :: [ABCB])
+  print (enum :: [VoidB])
   print $ datatypeInfo (Proxy :: Proxy TreeB)
   print $ datatypeInfo (Proxy :: Proxy VoidB)
   print $ datatypeInfo (Proxy :: Proxy (DataFamB Int (Maybe Int) Int))
   print treeC
   print abcC
   print dataFamC
-  print $ (enum :: [ABCC])
-  print $ (enum :: [VoidC])
+  print (enum :: [ABCC])
+  print (enum :: [VoidC])
   print treeDatatypeInfo
   print demotedTreeDatatypeInfo
   print demotedDataFamDatatypeInfo

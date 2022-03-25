@@ -1,4 +1,5 @@
-{-# LANGUAGE StandaloneDeriving, UndecidableInstances #-}
+{-# LANGUAGE StandaloneDeriving   #-}
+{-# LANGUAGE UndecidableInstances #-}
 -- | Metadata about what a datatype looks like
 --
 -- In @generics-sop@, the metadata is completely independent of the main
@@ -20,16 +21,14 @@ module Generics.SOP.Metadata
   , SourceUnpackedness(..)
   ) where
 
-import Data.Kind (Type)
-import GHC.Generics
-  ( Associativity(..)
-  , DecidedStrictness(..)
-  , SourceStrictness(..)
-  , SourceUnpackedness(..)
-  )
+import           Data.Kind               (Type)
+import           GHC.Generics            (Associativity (..),
+                                          DecidedStrictness (..),
+                                          SourceStrictness (..),
+                                          SourceUnpackedness (..))
 
-import Generics.SOP.Constraint
-import Generics.SOP.NP
+import           Generics.SOP.Constraint
+import           Generics.SOP.NP
 
 -- | Metadata for a datatype.
 --
@@ -61,7 +60,7 @@ data DatatypeInfo :: [[Type]] -> Type where
 -- @since 0.2.3.0
 --
 moduleName :: DatatypeInfo xss -> ModuleName
-moduleName (ADT name _ _ _) = name
+moduleName (ADT name _ _ _)   = name
 moduleName (Newtype name _ _) = name
 
 -- | The name of a datatype (or newtype).
@@ -69,7 +68,7 @@ moduleName (Newtype name _ _) = name
 -- @since 0.2.3.0
 --
 datatypeName :: DatatypeInfo xss -> DatatypeName
-datatypeName (ADT _ name _ _) = name
+datatypeName (ADT _ name _ _)   = name
 datatypeName (Newtype _ name _) = name
 
 -- | The constructor info for a datatype (or newtype).
@@ -77,7 +76,7 @@ datatypeName (Newtype _ name _) = name
 -- @since 0.2.3.0
 --
 constructorInfo :: DatatypeInfo xss -> NP ConstructorInfo xss
-constructorInfo (ADT _ _ cs _) = cs
+constructorInfo (ADT _ _ cs _)  = cs
 constructorInfo (Newtype _ _ c) = c :* Nil
 
 deriving instance

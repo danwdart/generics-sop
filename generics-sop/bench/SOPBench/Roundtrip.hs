@@ -1,7 +1,7 @@
 module SOPBench.Roundtrip where
 
-import qualified Generics.SOP as SOP
 import qualified GHC.Generics as GHC
+import qualified Generics.SOP as SOP
 
 class Roundtrip a where
   roundtrip :: a -> a

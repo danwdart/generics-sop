@@ -1,5 +1,5 @@
-{-# LANGUAGE PolyKinds #-}
-{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE PolyKinds               #-}
+{-# LANGUAGE UndecidableInstances    #-}
 {-# LANGUAGE UndecidableSuperClasses #-}
 -- | Type-level metadata
 --
@@ -34,21 +34,19 @@ module Generics.SOP.Type.Metadata
   ) where
 
 #if __GLASGOW_HASKELL__ <802
-import Data.Kind (Type)
+import           Data.Kind             (Type)
 #endif
-import Data.Proxy (Proxy (..))
-import GHC.Generics
-  ( Associativity(..)
-  , DecidedStrictness(..)
-  , SourceStrictness(..)
-  , SourceUnpackedness(..)
-  )
-import GHC.Types
-import GHC.TypeLits
+import           Data.Proxy            (Proxy (..))
+import           GHC.Generics          (Associativity (..),
+                                        DecidedStrictness (..),
+                                        SourceStrictness (..),
+                                        SourceUnpackedness (..))
+import           GHC.TypeLits
+import           GHC.Types
 
 import qualified Generics.SOP.Metadata as M
-import Generics.SOP.NP
-import Generics.SOP.Sing
+import           Generics.SOP.NP
+import           Generics.SOP.Sing
 
 -- Regarding the CPP in the datatype definitions below:
 --

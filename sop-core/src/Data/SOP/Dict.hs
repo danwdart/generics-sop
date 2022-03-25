@@ -1,4 +1,4 @@
-{-# LANGUAGE PolyKinds #-}
+{-# LANGUAGE PolyKinds          #-}
 {-# LANGUAGE StandaloneDeriving #-}
 -- | Explicit dictionaries.
 --
@@ -16,10 +16,10 @@
 --
 module Data.SOP.Dict where
 
-import Data.Proxy
-import Data.SOP.Classes
-import Data.SOP.Constraint
-import Data.SOP.NP
+import           Data.Proxy
+import           Data.SOP.Classes
+import           Data.SOP.Constraint
+import           Data.SOP.NP
 
 -- | An explicit dictionary carrying evidence of a
 -- class constraint.

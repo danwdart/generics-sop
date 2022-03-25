@@ -1,4 +1,5 @@
-{-# LANGUAGE PolyKinds, DeriveGeneric #-}
+{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE PolyKinds     #-}
 -- | Basic functors.
 --
 -- Definitions of the type-level equivalents of
@@ -44,19 +45,19 @@ module Data.SOP.BasicFunctors
   ) where
 
 #if !MIN_VERSION_base(4,11,0)
-import Data.Semigroup (Semigroup (..))
+import           Data.Semigroup       (Semigroup (..))
 #endif
-import Data.Kind (Type)
-import qualified GHC.Generics as GHC
+import           Data.Kind            (Type)
+import qualified GHC.Generics         as GHC
 
-import Data.Functor.Classes
+import           Data.Functor.Classes
 
-import Control.DeepSeq (NFData(..))
+import           Control.DeepSeq      (NFData (..))
 #if MIN_VERSION_deepseq(1,4,3)
-import Control.DeepSeq (NFData1(..), NFData2(..))
+import           Control.DeepSeq      (NFData1 (..), NFData2 (..))
 #endif
 
-import Data.Coerce (coerce)
+import           Data.Coerce          (coerce)
 
 -- * Basic functors
 

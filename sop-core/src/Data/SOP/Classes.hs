@@ -81,9 +81,9 @@ module Data.SOP.Classes
   , htoI
   ) where
 
-import Data.Kind (Type)
-import Data.SOP.BasicFunctors
-import Data.SOP.Constraint
+import           Data.Kind              (Type)
+import           Data.SOP.BasicFunctors
+import           Data.SOP.Constraint
 
 -- * Generalized applicative functor structure
 

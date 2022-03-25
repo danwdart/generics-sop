@@ -10,22 +10,23 @@ module Generics.SOP.TH
   , deriveMetadataType
   ) where
 
-import Control.Monad (join, replicateM, unless)
-import Data.List (foldl')
-import Data.Maybe (fromMaybe)
-import Data.Proxy
+import           Control.Monad                          (join, replicateM,
+                                                         unless)
+import           Data.List                              (foldl')
+import           Data.Maybe                             (fromMaybe)
+import           Data.Proxy
 
 -- importing in this order to avoid unused import warning
-import Language.Haskell.TH.Datatype.TyVarBndr
-import Language.Haskell.TH
-import Language.Haskell.TH.Datatype as TH
+import           Language.Haskell.TH
+import           Language.Haskell.TH.Datatype           as TH
+import           Language.Haskell.TH.Datatype.TyVarBndr
 
-import Generics.SOP.BasicFunctors
-import qualified Generics.SOP.Metadata as SOP
-import qualified Generics.SOP.Type.Metadata as SOP.T
-import Generics.SOP.NP
-import Generics.SOP.NS
-import Generics.SOP.Universe
+import           Generics.SOP.BasicFunctors
+import qualified Generics.SOP.Metadata                  as SOP
+import           Generics.SOP.NP
+import           Generics.SOP.NS
+import qualified Generics.SOP.Type.Metadata             as SOP.T
+import           Generics.SOP.Universe
 
 -- | Generate @generics-sop@ boilerplate for the given datatype.
 --
@@ -269,7 +270,7 @@ projection toName = funD toName . go'
     go' cs = go id cs
 
     go :: (Q Pat -> Q Pat) -> [TH.ConstructorInfo] -> [Q Clause]
-    go br [] = [mkUnreachableClause br]
+    go br []     = [mkUnreachableClause br]
     go br (c:cs) = mkClause br c : go (\p -> conP 'S [br p]) cs
 
     -- Generates a final clause of the form:
@@ -325,8 +326,8 @@ metadata' dataVariant typeName cs = md
           |]
 
     mdStrictness :: TH.ConstructorInfo -> Q [Q Exp]
-    mdStrictness ci@(ConstructorInfo { constructorName       = n
-                                     , constructorStrictness = bs }) =
+    mdStrictness ci@ConstructorInfo { constructorName       = n
+                                     , constructorStrictness = bs } =
       checkForGADTs ci $ mdConStrictness n bs
 
     mdConStrictness :: Name -> [FieldStrictness] -> Q [Q Exp]
@@ -340,8 +341,8 @@ metadata' dataVariant typeName cs = md
         |]) bs dss)
 
     mdCon :: TH.ConstructorInfo -> Q Exp
-    mdCon ci@(ConstructorInfo { constructorName    = n
-                              , constructorVariant = conVariant }) =
+    mdCon ci@ConstructorInfo { constructorName    = n
+                              , constructorVariant = conVariant } =
       checkForGADTs ci $
       case conVariant of
         NormalConstructor    -> [| SOP.Constructor $(stringE (nameBase n)) |]
@@ -399,8 +400,8 @@ metadataType' dataVariant typeName cs = md
            |]
 
     mdStrictness :: TH.ConstructorInfo -> Q [Q Type]
-    mdStrictness ci@(ConstructorInfo { constructorName       = n
-                                     , constructorStrictness = bs }) =
+    mdStrictness ci@ConstructorInfo { constructorName       = n
+                                     , constructorStrictness = bs } =
       checkForGADTs ci $ mdConStrictness n bs
 
     mdConStrictness :: Name -> [FieldStrictness] -> Q [Q Type]
@@ -414,8 +415,8 @@ metadataType' dataVariant typeName cs = md
         |]) bs dss)
 
     mdCon :: TH.ConstructorInfo -> Q Type
-    mdCon ci@(ConstructorInfo { constructorName    = n
-                              , constructorVariant = conVariant }) =
+    mdCon ci@ConstructorInfo { constructorName    = n
+                              , constructorVariant = conVariant } =
       checkForGADTs ci $
       case conVariant of
         NormalConstructor    -> [t| 'SOP.T.Constructor $(stringT (nameBase n)) |]
@@ -474,7 +475,7 @@ npE (e:es) = [| $e :* $(npE es) |]
 -- Construct a POP.
 popE :: [Q [Q Exp]] -> Q Exp
 popE ess =
-  [| POP $(npE (map (join . fmap npE) ess)) |]
+  [| POP $(npE (map ((npE =<<)) ess)) |]
 
 -- Like npE, but construct a pattern instead
 npP :: [Q Pat] -> Q Pat
@@ -486,8 +487,8 @@ npP (p:ps) = conP '(:*) [p, npP ps]
 -------------------------------------------------------------------------------}
 
 conInfo :: TH.ConstructorInfo -> Q (Name, [Q Type])
-conInfo ci@(ConstructorInfo { constructorName    = n
-                            , constructorFields  = ts }) =
+conInfo ci@ConstructorInfo { constructorName    = n
+                            , constructorFields  = ts } =
   checkForGADTs ci $ return (n, map return ts)
 
 stringT :: String -> Q Type
@@ -502,7 +503,7 @@ promotedTypeList (t:ts) = [t| $promotedConsT $t $(promotedTypeList ts) |]
 
 promotedTypeListOfList :: [Q [Q Type]] -> Q Type
 promotedTypeListOfList =
-  promotedTypeList . map (join . fmap promotedTypeList)
+  promotedTypeList . map ((promotedTypeList =<<))
 
 promotedTypeListSubst :: (Name -> Q Type) -> [Q Type] -> Q Type
 promotedTypeListSubst _ []     = promotedNilT
@@ -574,17 +575,17 @@ withDataDec :: TH.DatatypeInfo
                    -- The data type's constructors
                 -> Q a)
             -> Q a
-withDataDec (TH.DatatypeInfo { datatypeContext   = ctxt
+withDataDec TH.DatatypeInfo { datatypeContext   = ctxt
                              , datatypeName      = name
                              , datatypeVars      = bndrs
                              , datatypeInstTypes = instTypes
                              , datatypeVariant   = variant
-                             , datatypeCons      = cons }) f =
+                             , datatypeCons      = cons } f =
   f variant ctxt name bndrs instTypes cons
 
 checkForGADTs :: TH.ConstructorInfo -> Q a -> Q a
-checkForGADTs (ConstructorInfo { constructorVars    = exVars
-                               , constructorContext = exCxt }) q = do
+checkForGADTs ConstructorInfo { constructorVars    = exVars
+                               , constructorContext = exCxt } q = do
   unless (null exVars) $ fail "Existentials not supported"
   unless (null exCxt)  $ fail "GADTs not supported"
   q

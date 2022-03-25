@@ -1,8 +1,8 @@
-{-# LANGUAGE BangPatterns #-}
-{-# LANGUAGE EmptyCase #-}
-{-# LANGUAGE PolyKinds #-}
-{-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE StandaloneDeriving #-}
+{-# LANGUAGE BangPatterns         #-}
+{-# LANGUAGE EmptyCase            #-}
+{-# LANGUAGE PolyKinds            #-}
+{-# LANGUAGE ScopedTypeVariables  #-}
+{-# LANGUAGE StandaloneDeriving   #-}
 {-# LANGUAGE UndecidableInstances #-}
 {-# OPTIONS_GHC -fno-warn-deprecations #-}
 -- | n-ary sums (and sums of products)
@@ -91,18 +91,18 @@ module Data.SOP.NS
   , toI_SOP
   ) where
 
-import Data.Coerce
-import Data.Kind (Type)
-import Data.Proxy (Proxy (..))
-import Unsafe.Coerce
+import           Data.Coerce
+import           Data.Kind              (Type)
+import           Data.Proxy             (Proxy (..))
+import           Unsafe.Coerce
 
-import Control.DeepSeq (NFData(..))
+import           Control.DeepSeq        (NFData (..))
 
-import Data.SOP.BasicFunctors
-import Data.SOP.Classes
-import Data.SOP.Constraint
-import Data.SOP.NP
-import Data.SOP.Sing
+import           Data.SOP.BasicFunctors
+import           Data.SOP.Classes
+import           Data.SOP.Constraint
+import           Data.SOP.NP
+import           Data.SOP.Sing
 
 -- * Datatypes
 
@@ -303,8 +303,8 @@ type Injection (f :: k -> Type) (xs :: [k]) = f -.-> K (NS f xs)
 --
 injections :: forall xs f. SListI xs => NP (Injection f xs) xs
 injections = case sList :: SList xs of
-  SNil   -> Nil
-  SCons  -> fn (K . Z) :* liftA_NP shiftInjection injections
+  SNil  -> Nil
+  SCons -> fn (K . Z) :* liftA_NP shiftInjection injections
 
 -- | Shift an injection.
 --
@@ -385,9 +385,9 @@ instance HApInjs SOP where
 
 -- | Specialization of 'hap'.
 ap_NS :: NP (f -.-> g) xs -> NS f xs -> NS g xs
-ap_NS (Fn f  :* _)   (Z x)   = Z (f x)
-ap_NS (_     :* fs)  (S xs)  = S (ap_NS fs xs)
-ap_NS Nil            x       = case x of {}
+ap_NS (Fn f  :* _)   (Z x)  = Z (f x)
+ap_NS (_     :* fs)  (S xs) = S (ap_NS fs xs)
+ap_NS Nil            x      = case x of {}
 
 -- | Specialization of 'hap'.
 ap_SOP  :: POP (f -.-> g) xss -> SOP f xss -> SOP g xss
@@ -633,8 +633,7 @@ ctraverse__SOP p f = ctraverse__NS (allP p) (ctraverse__NP p f) . unSOP
 traverse__SOP ::
      forall xss f g. (SListI2 xss, Applicative g)
   => (forall a. f a -> g ()) -> SOP f xss -> g ()
-traverse__SOP f =
-  ctraverse__SOP topP f
+traverse__SOP = ctraverse__SOP topP
 {-# INLINE traverse__SOP #-}
 
 topP :: Proxy Top
@@ -704,8 +703,7 @@ ctraverse'_NS _ f = go where
 traverse'_NS  ::
      forall xs f f' g. (SListI xs,  Functor g)
   => (forall a. f a -> g (f' a)) -> NS f xs  -> g (NS f' xs)
-traverse'_NS f =
-  ctraverse'_NS topP f
+traverse'_NS = ctraverse'_NS topP
 {-# INLINE traverse'_NS #-}
 
 -- | Specialization of 'hctraverse''.
@@ -720,8 +718,7 @@ ctraverse'_SOP p f = fmap SOP . ctraverse'_NS (allP p) (ctraverse'_NP p f) . unS
 -- @since 0.3.2.0
 --
 traverse'_SOP :: (SListI2 xss, Applicative g) => (forall a. f a -> g (f' a)) -> SOP f xss -> g (SOP f' xss)
-traverse'_SOP f =
-  ctraverse'_SOP topP f
+traverse'_SOP = ctraverse'_SOP topP
 {-# INLINE traverse'_SOP #-}
 
 instance HSequence NS  where
@@ -807,8 +804,7 @@ ana_NS ::
   -> (forall y ys . s (y ': ys) -> Either (f y) (s ys))
   -> s xs
   -> NS f xs
-ana_NS refute decide =
-  cana_NS topP refute decide
+ana_NS = cana_NS topP
 {-# INLINE ana_NS #-}
 
 -- | Constrained anamorphism for 'NS'.
@@ -840,8 +836,7 @@ expand_NS :: forall f xs .
      (SListI xs)
   => (forall x . f x)
   -> NS f xs -> NP f xs
-expand_NS d =
-  cexpand_NS topP d
+expand_NS = cexpand_NS topP
 {-# INLINE expand_NS #-}
 
 -- | Specialization of 'hcexpand'.
@@ -866,8 +861,7 @@ expand_SOP :: forall f xss .
      (All SListI xss)
   => (forall x . f x)
   -> SOP f xss -> POP f xss
-expand_SOP d =
-  cexpand_SOP topP d
+expand_SOP = cexpand_SOP topP
 {-# INLINE cexpand_SOP #-}
 
 -- | Specialization of 'hcexpand'.
@@ -901,8 +895,8 @@ trans_NS ::
   => proxy c
   -> (forall x y . c x y => f x -> g y)
   -> NS f xs -> NS g ys
-trans_NS _ t (Z x)      = Z (t x)
-trans_NS p t (S x)      = S (trans_NS p t x)
+trans_NS _ t (Z x) = Z (t x)
+trans_NS p t (S x) = S (trans_NS p t x)
 
 -- | Specialization of 'htrans'.
 --

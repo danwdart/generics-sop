@@ -1,10 +1,10 @@
 {-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE GADTs #-}
-{-# LANGUAGE RankNTypes #-}
+{-# LANGUAGE GADTs            #-}
+{-# LANGUAGE RankNTypes       #-}
 module SOPBench.Show where
 
-import Data.List (intersperse)
-import Generics.SOP
+import           Data.List    (intersperse)
+import           Generics.SOP
 
 gshow ::
   (Generic a, HasDatatypeInfo a, All2 Show (Code a)) => a -> String
@@ -47,7 +47,7 @@ gshowsRecordArgs fi x =
   $ intersperse (showString ", ")
   $ hcollapse
   $ hczipWith pshow
-      (\ (FieldInfo l) (I y) -> K (showString l . showString " = " . showsPrec 0 y))
+      (\ (FieldInfo l) (I y) -> K (showString l . showString " = " . shows y))
       fi x
 
 pallshow :: Proxy (All Show)
